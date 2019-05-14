@@ -3,7 +3,6 @@ PKG_NAME:=hackerschool-server
 PKG_VERSION:=1.4.3d
 PKG_RELEASE:=0
 
-
 PKG_SOURCE:=hucon.run
 PKG_SOURCE_URL:=http://github.com/JonasTrampe/hackerschool/releases/download/$(PKG_VERSION)/
 PKG_HASH:=e4648b8cdcc4800858635a1ef7550d877bef0a8959d7ea03c397c90de3bee92d
@@ -55,10 +54,5 @@ fi
 exit 0
 endef
 
-
-
-
-
 # calls to build each package
 $(eval $(call BuildPackage,$(PKG_NAME)))
-
