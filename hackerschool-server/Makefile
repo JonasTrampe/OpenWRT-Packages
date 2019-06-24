@@ -1,0 +1,71 @@
+include $(TOPDIR)/rules.mk
+PKG_NAME:=hackerschool-server
+PKG_VERSION:=1.4.3L
+PKG_RELEASE:=0
+
+PKG_SOURCE:=hucon-$(PKG_VERSION).run
+PKG_SOURCE_URL:=http://github.com/JonasTrampe/hackerschool/releases/download/$(PKG_VERSION)/
+PKG_HASH:=6a5d409377614847ac690c52c8fabafeb3bbd0038f41d0460104834df9a7ad1e
+#PKG_SOURCE_SUBDIR:=$(PKG_NAME)
+#PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+
+include $(INCLUDE_DIR)/package.mk
+
+# base hackerschool package
+define Package/$(PKG_NAME)
+	SECTION:=hackerschool
+	CATEGORY:=Hackerschool
+	SUBMENU:=hackerschool
+	TITLE:=Hucon-Robot Webserver
+	DEPENDS:=+python-flask
+endef
+
+
+define Package/$(PKG_NAME)/description
+Hucon-Robot Webserver
+endef
+
+UNPACK_CMD:=$(CP) $(DL_DIR)/$(PKG_SOURCE) $(PKG_BUILD_DIR)
+
+define Package/$(PKG_NAME)/prepare
+        (cd $(PKG_BUILD_DIR))
+endef
+
+define Build/Compile
+        chmod +x $(PKG_BUILD_DIR)/$(PKG_SOURCE)
+	mkdir -p $(PKG_BUILD_DIR)/opt/hucon
+	mkdir -p $(PKG_BUILD_DIR)/etc/init.d
+	mkdir -p $(PKG_BUILD_DIR)/usr/lib/python2.7/site-packages/
+	$(PKG_BUILD_DIR)/$(PKG_SOURCE) $(PKG_BUILD_DIR)/opt/
+endef
+
+define Package/$(PKG_NAME)/install
+	$(INSTALL_DIR) $(1)/opt/hucon 
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_DIR) $(1)/usr/lib/python2.7/site-packages/
+
+	$(CP) -r $(PKG_BUILD_DIR)/opt/hucon/init.d/* $(1)/etc/init.d/
+	$(CP) -r $(PKG_BUILD_DIR)/opt/hucon/__version__ \
+		 $(PKG_BUILD_DIR)/opt/hucon/README.md \
+		 $(PKG_BUILD_DIR)/opt/hucon/code/ \
+		 $(PKG_BUILD_DIR)/opt/hucon/python_lib/ \
+		 $(PKG_BUILD_DIR)/opt/hucon/webserver/ \
+		 $(PKG_BUILD_DIR)/opt/hucon/i2c_led.sh \
+		 $(PKG_BUILD_DIR)/opt/hucon/start_server.sh \
+		 $(PKG_BUILD_DIR)/opt/hucon/uninstall.sh \
+		 $(PKG_BUILD_DIR)/opt/hucon/update.sh \
+		 $(1)/opt/hucon
+
+	$(PKG_BUILD_DIR)/opt/hucon/install.sh $(1)
+endef
+
+define Package/$(PKG_NAME)/postinst
+#!/bin/sh
+# check if we are on real system
+if [ -z "$${IPKG_INSTROOT}" ]; then
+fi
+exit 0
+endef
+
+# calls to build each package
+$(eval $(call BuildPackage,$(PKG_NAME)))
