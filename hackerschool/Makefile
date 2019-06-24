@@ -35,7 +35,7 @@ endef
 define Package/hackerschool-server/install
 	$(INSTALL_DIR) $(1)/opt/hucon 
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./init.d/* $(1)/etc/init.d/
+	$(CP) ./init.d/* $(1)/etc/init.d/
 	$(CP) -r ./opt/hucon/__version__ ./opt/hucon/README.md ./opt/hucon/code/ ./opt/hucon/python_lib/ ./opt/hucon/webserver/ ./opt/hucon/i2c_led.sh ./opt/hucon/install.sh ./opt/hucon/start_server.sh ./opt/hucon/uninstall.sh ./opt/hucon/update.sh $(1)/opt/hucon
 endef
 
