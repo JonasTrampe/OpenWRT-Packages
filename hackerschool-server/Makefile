@@ -1,11 +1,11 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=hackerschool-server
-PKG_VERSION:=1.4.3L
+PKG_VERSION:=1.4.6
 PKG_RELEASE:=0
 
 PKG_SOURCE:=hucon-$(PKG_VERSION).run
-PKG_SOURCE_URL:=http://github.com/JonasTrampe/hackerschool/releases/download/$(PKG_VERSION)/
-PKG_HASH:=6a5d409377614847ac690c52c8fabafeb3bbd0038f41d0460104834df9a7ad1e
+PKG_SOURCE_URL:=http://github.com/juwis/hackerschool/releases/download/$(PKG_VERSION)/
+PKG_HASH:=953b3b22634358db7b92683f236dd62e36c2b6c64b63b6378f7f4b571e3f7949
 #PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 #PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
@@ -32,7 +32,7 @@ define Package/$(PKG_NAME)/prepare
 endef
 
 define Build/Compile
-        chmod +x $(PKG_BUILD_DIR)/$(PKG_SOURCE)
+	chmod +x $(PKG_BUILD_DIR)/$(PKG_SOURCE)
 	mkdir -p $(PKG_BUILD_DIR)/opt/hucon
 	mkdir -p $(PKG_BUILD_DIR)/etc/init.d
 	mkdir -p $(PKG_BUILD_DIR)/usr/lib/python2.7/site-packages/
@@ -40,11 +40,13 @@ define Build/Compile
 endef
 
 define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/opt/hucon 
+	$(INSTALL_DIR) $(1)/opt/hucon
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_DIR) $(1)/usr/lib/python2.7/site-packages/
 
-	$(CP) -r $(PKG_BUILD_DIR)/opt/hucon/init.d/* $(1)/etc/init.d/
+	chmod +x $(PKG_BUILD_DIR)/opt/hucon/init.d/*
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/opt/hucon/init.d/* $(1)/etc/init.d/
+
 	$(CP) -r $(PKG_BUILD_DIR)/opt/hucon/__version__ \
 		 $(PKG_BUILD_DIR)/opt/hucon/README.md \
 		 $(PKG_BUILD_DIR)/opt/hucon/code/ \
@@ -56,13 +58,14 @@ define Package/$(PKG_NAME)/install
 		 $(PKG_BUILD_DIR)/opt/hucon/update.sh \
 		 $(1)/opt/hucon
 
-	$(PKG_BUILD_DIR)/opt/hucon/install.sh $(1)
+	$(PKG_BUILD_DIR)/opt/hucon/img_install.sh $(1)
 endef
 
 define Package/$(PKG_NAME)/postinst
 #!/bin/sh
 # check if we are on real system
 if [ -z "$${IPKG_INSTROOT}" ]; then
+	true
 fi
 exit 0
 endef
