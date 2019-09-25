@@ -1,11 +1,11 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=hackerschool-server
-PKG_VERSION:=1.4.7
+PKG_VERSION:=1.5.0
 PKG_RELEASE:=0
 
 PKG_SOURCE:=hucon-$(PKG_VERSION).run
-PKG_SOURCE_URL:=http://github.com/juwis/hackerschool/releases/download/$(PKG_VERSION)/
-PKG_HASH:=5dbb2bcbd73bac15749c08c9ad11b3fab4454d72c623818b470c83700e23875d
+PKG_SOURCE_URL:=http://github.com/basler/hucon/releases/download/$(PKG_VERSION)/
+PKG_HASH:=8578574de437c58aef11a79f0cc4428ef3fa058b2d9f9736452936339a90dce2
 #PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 #PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
