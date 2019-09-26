@@ -1,11 +1,13 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=hackerschool-server
-PKG_VERSION:=1.5.0
+PKG_VERSION:=1.5.0-3
 PKG_RELEASE:=0
 
+REPOSITORY_PATH:=JonasTrampe/hucon
+
 PKG_SOURCE:=hucon-$(PKG_VERSION).run
-PKG_SOURCE_URL:=http://github.com/basler/hucon/releases/download/$(PKG_VERSION)/
-PKG_HASH:=8578574de437c58aef11a79f0cc4428ef3fa058b2d9f9736452936339a90dce2
+PKG_SOURCE_URL:=http://github.com/$(REPOSITORY_PATH)/releases/download/$(PKG_VERSION)/
+PKG_HASH:=fba4eb2cac89acb95e2026ec12d453cc44181aa34a8daa7685cf4a3411ea540a
 #PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 #PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
@@ -36,7 +38,7 @@ define Build/Compile
 	mkdir -p $(PKG_BUILD_DIR)/opt/hucon
 	mkdir -p $(PKG_BUILD_DIR)/etc/init.d
 	mkdir -p $(PKG_BUILD_DIR)/usr/lib/python2.7/site-packages/
-	$(PKG_BUILD_DIR)/$(PKG_SOURCE) $(PKG_BUILD_DIR)/opt/ --unpack
+	$(PKG_BUILD_DIR)/$(PKG_SOURCE) $(PKG_BUILD_DIR)/opt/ unpack
 endef
 
 define Package/$(PKG_NAME)/install
