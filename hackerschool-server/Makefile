@@ -3,7 +3,7 @@ PKG_NAME:=hackerschool-server
 PKG_VERSION:=1.5.0-3
 PKG_RELEASE:=0
 
-REPOSITORY_PATH:=JonasTrampe/hucon
+REPOSITORY_PATH:=basler/hucon
 
 PKG_SOURCE:=hucon-$(PKG_VERSION).run
 PKG_SOURCE_URL:=http://github.com/$(REPOSITORY_PATH)/releases/download/$(PKG_VERSION)/
